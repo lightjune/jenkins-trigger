@@ -5,15 +5,10 @@
       "format": "%(asctime)s [%(levelname)s] %(module)s: %(message)s"
     },
     "payload_format": {
-      "format": "[%(asctime)s] %(message)s"
+      "format": "%(asctime)s:\n%(message)s"
     }
   },
   "handlers": {
-    "console": {
-      "class": "logging.StreamHandler",
-      "level": "INFO",
-      "formatter": "default"
-    },
     "file": {
       "class": "logging.FileHandler",
       "filename": "log/jenkins-trigger.log",
@@ -28,18 +23,17 @@
     }
   },
   "loggers": {
-    "payload": {
+    "payload_logger": {
       "level": "INFO",
       "handlers": [
         "payload_file"
       ]
+    },
+    "logger": {
+      "level": "INFO",
+      "handlers": [
+        "file"
+      ]
     }
-  },
-  "root": {
-    "level": "INFO",
-    "handlers": [
-      "console",
-      "file"
-    ]
   }
 }

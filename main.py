@@ -1,19 +1,14 @@
-import json
-import logging.config
 from flask import Flask, render_template, request
-
+from init import logger, payload_logger
+import json
 
 application = Flask(__name__)
-
-with open('configs/logging.json', 'rt') as f:
-    logging_config = json.load(f)
-logging.config.dictConfig(logging_config)
-Logger = logging.getLogger("payload")
 
 
 @application.route("/jenkins-trigger", methods=["POST"])
 def jenkins_trigger():
-    Logger.info(request.form)
+    logger.info("(%s) %s", request.method, request.path)
+    payload_logger.info(json.dumps(request.form, indent=2))
     return render_template("empty.html"), 200
 
 
