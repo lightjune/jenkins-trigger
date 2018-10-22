@@ -17,14 +17,14 @@ def jenkins_trigger():
 
     if not event_type:
         logger.warn("There is no X-GitHub-Event header")
-        return render_template("empty.html"), 400
+        return render_template("result.html", result="FAIL"), 400
     else:
         event = Event.factory(event_type, request.form)
 
     if event and event.is_triggering_event():
         pass
 
-    return render_template("empty.html"), 200
+    return render_template("result.html", result="SUCCESS"), 200
 
 
 if __name__ == "__main__":
