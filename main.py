@@ -11,7 +11,7 @@ application = Flask(__name__)
 @application.route("/jenkins-trigger", methods=["POST"])
 def jenkins_trigger():
     logger.info(f"({request.method}) {request.path}")
-    payload_logger.info(json.dumps(request.form, indent=2))
+    payload_logger.info(json.dumps(json.loads(request.get_data()), indent=2))
 
     event_type = request.headers.get("X-GitHub-Event")
 
@@ -19,7 +19,7 @@ def jenkins_trigger():
         logger.warn("There is no X-GitHub-Event header")
         return render_template("result.html", result="FAIL"), 400
     else:
-        event = Event.factory(event_type, request.form)
+        event = Event.factory(event_type, request.get_data())
 
     if event and event.is_triggering_event():
         pass

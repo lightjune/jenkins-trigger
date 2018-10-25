@@ -12,8 +12,8 @@ class Event:
     """
     @staticmethod
     def factory(event_type, payload):
-        if isinstance(payload, str):
-            payload = json.dumps(payload)
+        if isinstance(payload, bytes) or isinstance(payload, str):
+            payload = json.loads(payload)
         elif isinstance(payload, dict):
             pass
         else:
