@@ -6,6 +6,9 @@
     },
     "payload_format": {
       "format": "%(asctime)s:\n%(message)s"
+    },
+    "plain": {
+      "format": "%(message)s"
     }
   },
   "handlers": {
@@ -20,19 +23,31 @@
       "filename": "log/payload.log",
       "level": "INFO",
       "formatter": "payload_format"
+    },
+    "werkzeug": {
+      "class": "logging.FileHandler",
+      "filename": "log/werkzeug.log",
+      "level": "INFO",
+      "formatter": "plain"
     }
   },
   "loggers": {
+    "flask.app": {
+      "level": "INFO",
+      "handlers": [
+        "file"
+      ]
+    },
     "payload_logger": {
       "level": "INFO",
       "handlers": [
         "payload_file"
       ]
     },
-    "logger": {
+    "werkzeug": {
       "level": "INFO",
       "handlers": [
-        "file"
+        "werkzeug"
       ]
     }
   }
